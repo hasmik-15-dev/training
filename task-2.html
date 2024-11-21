@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <style>
+            body {
+                font-family:'Times New Roman', Times, serif;
+                font-size: 14px;
+                color:#3b3b3b
+            }
+            #cont {
+                position: relative;
+                width:570px;
+                margin: auto;
+                padding: 30px 30px;
+                top: 200px;
+                color:rgb(226, 229, 230);
+                background-color: cadetblue;
+                border: 1px solid #999;
+            }
+            button {
+                height: 28px;
+                color:darkcyan;
+                font-weight: bold;
+            }
+            #res {
+                font-size: 20px;
+                color:rgba(139, 0, 0, 0.705);
+            }
+            a:link, a:hover, a:visited, a:active {
+                color: antiquewhite;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="cont">
+            <h1>Welcome! Let's play</h1>
+            <h3>The computer randomly selects a number between 1 and 100</h3>
+            
+            <div id="rnd_gen_content">
+                <h4>Click the button to start the play!</h4>
+                <button id="rnd_gen" onclick="rndGen()">Click me</button>
+            </div>
+            <div id="user_content" style="display: none;">
+                <h4>Enter your number below to guess the correct number</h4>
+                <input type="text" id="your_num" onkeyup="checkNum(this)">
+                <p id="res"></p>
+            </div>
+        </div>
+        <script>
+            let rnd_num;
+            function rndGen() {
+                document.getElementById("rnd_gen_content").style.display = "none";
+                rnd_num = Math.floor((Math.random() * 100) + 1);
+                document.getElementById("user_content").style.display = "block";
+            }
+            let user_num;
+            function checkNum(n) {
+                document.getElementById("res").innerHTML = n.value;
+                user_num = n.value;
+                if ( user_num == rnd_num) {
+                    document.getElementById("res").innerHTML = "Congratulations! You Won!";
+                    let res = document.getElementById("res");
+
+                    Element.prototype.appendAfter = function (element) {
+                        element.parentNode.insertBefore(this, element.nextSibling);
+                    }, false;
+
+                    let t = document.createElement("p");
+                    let textNode = document.createTextNode("If you want to play again click the link below!");
+                    t.appendChild(textNode);
+                    t.appendAfter(res);
+                    let link_el = document.createElement("a");
+                    link_el.setAttribute("href","?");
+                    link_el.innerHTML = "Play again";
+                    link_el.appendAfter(t);
+                    document.getElementById("your_num").disabled = true;
+
+                } else if ( ( (rnd_num-user_num)>0 && (rnd_num-user_num)<5 ) || ((user_num-rnd_num)>0 && (user_num-rnd_num)<5 ) ) {
+                    document.getElementById("res").innerHTML = "You are very close!";
+                } else if ( ((rnd_num-user_num)>0 && (rnd_num-user_num)<10) || ((user_num-rnd_num)>0 && (user_num-rnd_num)<10) ) {
+                    document.getElementById("res").innerHTML = "You are close!";
+                } else {
+                    document.getElementById("res").innerHTML = "You are far!";
+                }
+
+            }
+        </script>
+    </body>
+</html>

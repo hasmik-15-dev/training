@@ -1,0 +1,129 @@
+<html>
+    <head>
+        <style>
+            body {
+                font-family:'Times New Roman', Times, serif;
+                font-size: 14px;
+                color:#3b3b3b
+            }
+            #cont {
+                position: relative;
+                width:570px;
+                margin: auto;
+                padding: 50px;
+                top: 200px;
+                border: 1px solid #999;
+            }
+
+            #assig {
+                position: relative;
+                display: inline-block;
+            }
+            #assig_add_btn {
+                position: absolute;
+                display: inline-block;
+                margin-left: 10px;
+            }
+
+            button {
+                height: 26px;
+                color: #464646;
+                font-family:'Times New Roman', Times, serif;
+                font-size: 16px;
+                background-color: rgb(207, 174, 130);;
+            }
+
+            textarea {
+                padding:5px;
+            }
+            #err_txt {
+                font-size: 16px;
+                font-weight: bold;
+                color:crimson;
+            }
+            #assignList {
+                padding:0;
+                list-style-type: none;
+            }
+            #assignList li {
+                margin-top: 5px;
+                position: relative;
+                padding:5px;
+                border: 1px solid #999;
+            }
+            #numbering {
+                color:#464646;
+            }
+            #check {
+                display:inline-block; 
+                position: absolute; 
+                right:5px; 
+                cursor: pointer;
+                padding: 0 3px;
+                background-color: rgb(212, 189, 159);
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="cont">
+            <div id="assig_cont">
+                <div id="assig">
+                    <textarea rows="4" cols="57" id="assignment" placeholder="Type your assignment" required></textarea>
+                </div>
+                <div id="assig_add_btn">
+                    <button onclick="addAssignment()">Add Assignment</button>
+                </div>
+                <p id="err_txt"></p>
+            </div>
+            <h3 id="list_title"></h3>
+            <ul id="assignList">
+            </ul>
+        </div>
+        <script>
+
+            let n=0;
+            
+            function addAssignment() {
+               
+                let err = false;
+                let x = document.getElementById("assignment").value;
+                if ( x == "" ) {
+                    err = true;
+                    document.getElementById("err_txt").innerHTML = "You must fill the field!";
+                    return false;
+                } else document.getElementById("err_txt").innerHTML = "";
+                alert(err);
+                if (!err) {
+                    ++n;
+                    document.getElementById("list_title").innerHTML="Assignments List";
+                    let myList = document.getElementById("assignList");
+                    
+                    let myList_li=document.createElement("li");
+                    myList.appendChild(myList_li);
+                
+                    let input_val = n + ". " + document.getElementById("assignment").value;
+                    let assign_text_el = document.createElement("span");
+                    let text = document.createTextNode(input_val);
+                    myList_li.appendChild(text);
+
+                    let span = document.createElement("span");
+                    let el = document.createElement("INPUT");
+                    el.setAttribute("type", "checkbox");
+                    el.setAttribute("id", "check");
+                    el.setAttribute("onclick", "myFunc(this)");
+                    span.appendChild(el);
+                    myList_li.appendChild(span); 
+                }
+               
+            }
+            function myFunc(x) {
+                if(confirm("Are you sure you complete this assignment")){
+                    x.disabled = true;
+                    x.setAttribute("title","Done");
+                }
+            }
+
+        </script>
+    </body>
+</html>
